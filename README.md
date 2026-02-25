@@ -1,5 +1,18 @@
 # etl-project-first-delivery
 
+## Team Members
+$$
+\begin{array}{|c|c|}
+\hline
+\text{Código} & \text{Apellido} & \text{Nombre}\\
+\hline
+\text {2240129}  & \text {Meza}  & \text {Juan David} \\
+\text {2243533}  & \text {Uribe}  & \text {Santiago}  \\
+\text {2249266}  & \text {Zambrano}  & \text {Andrés}  \\
+\hline
+\end{array}
+$$
+
 ## Libraries
 The project uses the following python libraries on its jupyter notebook. Please make sure they are installed by running 
 `pip install -r requirements.txt`
