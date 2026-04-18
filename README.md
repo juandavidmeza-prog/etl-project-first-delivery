@@ -21,17 +21,17 @@ Even though no dependencies are to be installed locally, the notebook does ask f
 
 * Pandas: dataframe management, EDA, plotly, and `.csv` to `.db` intermediary.  
 * SQLite3: python + SQL. Replaced DuckDB as per the Airflow setup provided during the course.  
-* plotly: most natural way of integrating a dashboard visualization into Google Colab.
-* Airflow and Great Expectations: orchestrator and data quality validator for the pipeline, respectively, in accordance to the expected scope of the project. Worth noting, their use is ideantical as displayed during the `airflow_gx.ipynb` class example.  
-* Requests: handling OpenAQ and REST Countries respective API calls.
-* json: API handling commodity (format is `.json` and thus easier to work with the tailored library).
+* plotly: most competent way of integrating a dashboard visualization into Google Colab.
+* Airflow and Great Expectations: orchestrator and data quality validator for the pipeline, respectively, in accordance to the expected scope of the project. Worth noting, their use and implementation is identical to the `airflow_gx.ipynb` example displayed during class.  
+* Requests: handling OpenAQ and REST Countries respective API calls.  
+* json: API responses handling commodity, as they are sent in `.json` format, meaning the tailored library is rather suitable.  
 * os, datetime: emotional support.  
 
 ## Technologies 
 ### Data Warehouse Architecture 
-Succeeding the previous submission, the team focused on explanding the scope of information the warehouse could provide. To this extent, it was decided OpenAQ would fit the job, as it offers valuable, real, and updated insights on the different countries' air conditions. These two sources would be tied together with a neutral, quality guaranteed, third source. REST Countries was untimately chosen for the task, although scrapping [Wikipedia's ISO 3166-1 page](https://en.wikipedia.org/wiki/ISO_3166-1) (or its variants) was considered for the same end.  
+Succeeding the previous submission, the team focused on expanding the scope of information the warehouse could provide. To this extent, it was decided OpenAQ would fit the job, as it offers valuable, real, and updated insights on the different countries' air conditions (when the API responses work, that is). Given standarized nomenclature is a top priority, the third source that should also guarantee coherence on this regard, and ideally elaborate on the available information for each data point. [REST Countries](https://restcountries.com/) was ultimately chosen for the task, although scrapping [Wikipedia's ISO 3166-1 page](https://en.wikipedia.org/wiki/ISO_3166-1) (or its variants) was considered for the same end.  
 
-The fact remains the same (pun not intended): it is still a star schema, albeit with a new fact table (provided by OpenAQ) and a small addition to the location dimension (REST Countries) --and the relevant join, of course.  
+The facts remain the same (not literally though): it is still a star schema, albeit with a new fact table (provided by OpenAQ) and a small addition to the location dimension (REST Countries) --and the relevant join, of course.  
 
 
 ```mermaid
