@@ -1,4 +1,5 @@
-# etl-project-first-delivery
+# etl-project-second-delivery
+check first delivery link: https://github.com/juandavidmeza-prog/etl-project-first-delivery/tree/main
 
 ## Team Members
 $$
@@ -14,16 +15,23 @@ $$
 $$
 
 ## Libraries
-The project uses the following python libraries on its jupyter notebook. Please make sure they are installed by running 
-`pip install -r requirements.txt`
+The project was designed to run on the Google Colab environment. While this poses some limitations to the scope and availability of the notebook and its dependencies, the pros outweighted the cons. Namely, the guarantee that it would run under the preset configuration for every team member or evaluator, as well as the comfort of an option that was already tried and tested along the course's activities. 
 
-* Pandas: dataframe management. the team leaned towards this library due to their experience working with it, as well as simplicity's sake.  
-* Duckdb: python + SQL.  
-* matplotlib, plotly: simple yet effective tools to visualize the first few outputs of the pipeline at the dashboard level.  
+Even though no dependencies are to be installed locally, the notebook does ask for a few imports. Their names and roles are as presented: 
+
+* Pandas: dataframe management, EDA, plotly, and `.csv` to `.db` intermediary.  
+* SQLite3: python + SQL. Replaced DuckDB as per the Airflow setup provided during the course.  
+* plotly: most natural way of integrating a dashboard visualization into Google Colab.
+* Airflow and Great Expectations: orchestrator and data quality validator for the pipeline, respectively, in accordance to the expected scope of the project. Worth noting, their use is ideantical as displayed during the `airflow_gx.ipynb` class example.  
+* Requests: handling OpenAQ and REST Countries respective API calls.
+* json: API handling commodity (format is `.json` and thus easier to work with the tailored library).
+* os, datetime: emotional support.  
 
 ## Technologies 
 ### Data Warehouse Architecture 
-The project uses a relational model for the database, both in raw and in data warehouse variations. Since the latter is OLAP-oriented, the team opted for a star architecture, as it was deemed a better fit for the current needs. Though future expansions are contemplated, the extent to which we, as a team, decided to work on this delivery was deemed suitable for a star model; any subsequent improvements on the warehouse can be worked on top of the current architecture without significant inconveniences or tech debt.  
+Succeeding the previous submission, the team focused on explanding the scope of information the warehouse could provide. To this extent, it was decided OpenAQ would fit the job, as it offers valuable, real, and updated insights on the different countries' air conditions. These two sources would be tied together with a neutral, quality guaranteed, third source. REST Countries was untimately chosen for the task, although scrapping [Wikipedia's ISO 3166-1 page](https://en.wikipedia.org/wiki/ISO_3166-1) (or its variants) was considered for the same end.  
+
+The fact remains the same (pun not intended): it is still a star schema, albeit with a new fact table (provided by OpenAQ) and a small addition to the location dimension (REST Countries) --and the relevant join, of course.  
 
 
 ```mermaid
@@ -39,10 +47,18 @@ erDiagram
         boolean is_latest_year
     }
 
+    FACT_AIR_QUALITY {
+        string iso_alpha3
+        float pm25_value
+        float clean_fuel_access
+        datetime timestamp
+    }
+
     DIM_LOCATION {
-        string location_id
+        string iso_alpha3 PK
         string country_name
-        string region_name
+        string region
+        int population
     }
 
     DIM_TIME {
@@ -62,8 +78,25 @@ erDiagram
         string unit
     }
 
+    FACT_AIR_QUALITY }o--|| DIM_LOCATION : "joins on iso_alpha3"
     FACT_CLEAN_FUEL_ACCESS }o--|| DIM_LOCATION : joins
     FACT_CLEAN_FUEL_ACCESS }o--|| DIM_TIME : joins
     FACT_CLEAN_FUEL_ACCESS }o--|| DIM_RESIDENCE : joins
     FACT_CLEAN_FUEL_ACCESS }o--|| DIM_INDICATOR : joins
+```
+
+
+### Airflow DAG design
+Once again emulating the course's demonstration, the team designed the DAG such as it ingests the data and then validates it before loading it into the final warehouse. While it could be separated into three different branches (i.e., each source being processed on its own and having the validation apply individually), the team decided it was not the effort given the reliability of the sources: one is unchanging (WHO), one is big enough to pretty much guarantee it will be available 24/7 (REST Countries), and one is a small opensource project with ~~barely a few hundred people network and a distinctive lack of consistency in their API to the point we might as well treat it as nonexistent~~ limited support and interruptions in their service status (OpenAQ). Under this optic, it was deemed more realistic to treat the whole pipeline as a consistent stream that would only significantly break down under abnormal circumstances, and otherwise deprecate the unresponsive parts and either replace them manually or substitute them with a dummy value until a more reliable, consistent solucion is found.   
+
+```mermaid
+flowchart TD
+    A[extract_transform_task] --> B[validate_task]
+
+    B --> C[load_dw_task]
+    C --> F[fin]
+
+    B --> D[mover_cuarentena]
+    D --> E[enviar_alerta]
+    E --> F
 ```
