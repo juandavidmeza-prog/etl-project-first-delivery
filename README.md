@@ -101,4 +101,5 @@ flowchart TD
     E --> F
 ```
 
-{% include_relative /resources/plotly_example.html %} 
+### Dashboard (click me)
+[![countries of the world plot with air quality info](https://raw.githubusercontent.com/juandavidmeza-prog/etl-project-first-delivery/refs/heads/second_delivery/resources/countriesplot.png)](https://azambrano25.github.io/etl-embeds/plotly_example.html)
