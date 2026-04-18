@@ -100,3 +100,5 @@ flowchart TD
     D --> E[enviar_alerta]
     E --> F
 ```
+
+{% include_relative /resources/plotly_example.html %} 
