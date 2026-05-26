@@ -1,15 +1,15 @@
 # etl-project-final-delivery
-check first delivery link: https://github.com/juandavidmeza-prog/etl-project-first-delivery/tree/main
-check second delivery link: https://github.com/juandavidmeza-prog/etl-project-first-delivery/tree/second_delivery
+check first delivery link: [tree/main](https://github.com/juandavidmeza-prog/etl-project-first-delivery/tree/main)  
+check second delivery link: [tree/second_delivery](https://github.com/juandavidmeza-prog/etl-project-first-delivery/tree/second_delivery)  
 
 ### relevant ipynbs
-if submission before deadline is paramount: https://github.com/juandavidmeza-prog/etl-project-first-delivery/blob/final_delivery/air_quality_pipeline_final_v1.ipynb
-if leniency is given for improvements on pipeline (read ### Airflow DAG design for details): https://github.com/juandavidmeza-prog/etl-project-first-delivery/blob/final_delivery/ipynb/final_delivery_pipeline_v2.ipynb 
-^or better yet, this collab permalink because preview on github is corrupted, apparently: https://colab.research.google.com/drive/1B6G-KHbdDiioxNiLhBG_FNT-klLbBOBg?usp=sharing
+if submission before deadline is paramount: [air_quality_pipeline_final_v1.ipynb](https://github.com/juandavidmeza-prog/etl-project-first-delivery/blob/final_delivery/air_quality_pipeline_final_v1.ipynb)  
+if leniency is given for improvements on pipeline (read ### Airflow DAG design for details): [final_delivery_pipeline_v2.ipynb](https://github.com/juandavidmeza-prog/etl-project-first-delivery/blob/final_delivery/ipynb/final_delivery_pipeline_v2.ipynb)  
+^or better yet, this collab permalink because preview on github is corrupted, apparently: [final_delivery_pipeline](https://colab.research.google.com/drive/1B6G-KHbdDiioxNiLhBG_FNT-klLbBOBg?usp=sharing)  
 
 ### previous EDAs not within this repository (shared to UAO accounts) 
-WHO clean fuel access: https://colab.research.google.com/drive/1cp1FPLmB3UjSoLDi7RSLjEUf3xGYdQ-p
-OpenAQ: https://colab.research.google.com/drive/1CVlm32kN8q8N9Viz_RtwlFhEm4xqIWT8
+WHO clean fuel access: [household-air-pollution.ipynb](https://colab.research.google.com/drive/1cp1FPLmB3UjSoLDi7RSLjEUf3xGYdQ-p)  
+OpenAQ: [openaq-test.ipynb](https://colab.research.google.com/drive/1CVlm32kN8q8N9Viz_RtwlFhEm4xqIWT8)  
 
 
 ## Team Members
@@ -105,7 +105,11 @@ erDiagram
 
 
 ### Airflow DAG design
-Working on the previous segmnet's foundations, the pipeline works much as the guidelines suggested. The data ingestion and processing remains mostly the same, except for the rewriting of the OpenAQ section: the endpoints missmatch the documentation, and it being orchestrated and delegated to Cloudflare's Airflow instance means it cannot access some of the local data (such as the API key stored on Google Colab secrets tab). That said, the processing and execution is still of the same nature. Only other noticeable difference was getting Kafka to run along Airflow ---not because they are mutually incompatible, but because their instalation setups result in conflicting package dependencies. While the pipeline works, the Colab environment demands a less-than-pristine cell structure for the aforementioned reasons (and some might need to be ran twice or in an order different to what intuition might suggest). Lastly, Great Expectations and its quarantine feature, while useful in theory, has never had any real application during the development phase; it is still convenient as a backup in case this is to be further scaled up, though it should be taken mostly as an excercise on good software practices.    
+Working on the previous segmnet's foundations, the pipeline works much as the guidelines suggested. The data ingestion and processing remains mostly the same, except for the rewriting of the OpenAQ section: the endpoints missmatch the documentation, and it being orchestrated and delegated to Cloudflare's Airflow instance means it cannot access some of the local data (such as the API key stored on Google Colab secrets tab). That said, the processing and execution is still of the same nature. 
+
+Only other noticeable difference was getting Kafka to run along Airflow —not because they are mutually incompatible, but because their instalation setups result in conflicting package dependencies. While the pipeline works, the Colab environment demands a less-than-pristine cell structure for the aforementioned reasons (and some might need to be ran twice or in an order different to what intuition might suggest). 
+
+Lastly, Great Expectations and its quarantine feature, while useful in theory, has never had any real application during the development phase; it is still convenient as a backup in case this is to be further scaled up, though it should be taken mostly as an excercise on good software practices.    
 
 ```mermaid
 flowchart TD
@@ -134,13 +138,13 @@ flowchart TD
 ```
 
 ## Value provided 
-While not a thorough or necessary inquiry, the project has still provided an answer that fits its original purpose. Being able to visualize world-wide air quality data aggregated from different sources is a rather inessential commodity, it may still provide some insights for those who actively advocate for taking responsibility over our environmantal conditions; contrasting it with the WHO's measurements allow for a wider scope on which countries are pulling ahead on this task --not as a competition, but as a colelctive effort. Consistently monitorning the nature of the breathing quality across different countries is not ineffectual if the appropriate measures are taken, yet that first demands for the seeds of consiousness to be sown.  
+While not a thorough or necessary inquiry, the project has still provided an answer that fits its original purpose. Being able to visualize world-wide air quality data aggregated from different sources is a rather inessential commodity, it may still provide some insights for those who actively advocate for taking responsibility over our environmantal conditions; contrasting it with the WHO's measurements allow for a wider scope on which countries are pulling ahead on this task —not as a competition, but as a colelctive effort. Consistently monitorning the nature of the breathing quality across different countries is not ineffectual if the appropriate measures are taken, yet that first demands for the seeds of consiousness to be sown.  
 
 Oh, you meant it as the way the software architecture affects the data processing? ... it has the information decently refined and set to be retrievable on demand at speeds sufficient for this project's scope. Both OLAP and OLTP transactions can be done on the warehouse, each dashboard being an example of it. Surely they can both be improved, but by that point it's better to jump straight to the source providers and look at their own visualizations for their respective datasets.  
 
 ### Dashboard (click me)  
 tbh i doubt i will update this part. just click the collab permalink and pray it hasn't broken yet. also, there was a prettier graph for the live dashboard, but i had to put it down because it started complicating ipynb compatibility (it also looks ugly as sin when it stops running live but whatever).  
 
-[https://colab.research.google.com/drive/1B6G-KHbdDiioxNiLhBG_FNT-klLbBOBg ](https://colab.research.google.com/drive/1B6G-KHbdDiioxNiLhBG_FNT-klLbBOBg)
+[collab permalink (same as one on top of readme)](https://colab.research.google.com/drive/1B6G-KHbdDiioxNiLhBG_FNT-klLbBOBg)
 
 [![countries of the world plot with air quality info](https://raw.githubusercontent.com/juandavidmeza-prog/etl-project-first-delivery/refs/heads/second_delivery/resources/countriesplot.png)](https://azambrano25.github.io/etl-embeds/plotly_example.html)
